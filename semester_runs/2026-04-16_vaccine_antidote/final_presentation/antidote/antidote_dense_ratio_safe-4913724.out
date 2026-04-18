@@ -1,0 +1,416 @@
+---------------------------------------
+Begin Slurm Prolog: Apr-18-2026 05:57:40
+Job ID:    4913724
+User ID:   rswaminathan38
+Account:   coc
+Job name:  antidote_dr_005_h200
+Partition: ice-gpu
+QOS:       coc-ice
+---------------------------------------
+========================================
+Safe Antidote Dense-Ratio Job
+Job ID           : 4913724
+Node             : atl1-1-03-018-2-0.pace.gatech.edu
+Project root     : /storage/ice1/3/3/rswaminathan38/Research/Antidote
+Dense ratio      : 0.05
+Poison ratio     : 0.2
+Sample num       : 5000
+Bad sample num   : 2000
+Model path       : meta-llama/Llama-2-7b-hf
+Base SFT ckpt    : /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/Llama-2-7b-hf_sft
+Stage1 ckpt      : /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/sst2/Llama-2-7b-hf_sft_f_0.2_5000
+Train output     : /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000
+Poison output    : /storage/ice1/3/3/rswaminathan38/Research/Antidote/data/poison/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000
+SST2 output      : /storage/ice1/3/3/rswaminathan38/Research/Antidote/data/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000
+Precheck only    : 0
+Sat Apr 18 05:57:40 EDT 2026
+========================================
+Python executable: /home/hice1/rswaminathan38/scratch/conda_envs/antidote/bin/python
+Conda prefix     : /home/hice1/rswaminathan38/scratch/conda_envs/antidote
+Python exec: /home/hice1/rswaminathan38/scratch/conda_envs/antidote/bin/python
+Torch version: 2.1.0+cu121
+Transformers version: 4.37.2
+Datasets version: 2.14.7
+PEFT version: 0.8.2
+CUDA available: True
+GPU: NVIDIA H200
+CUDA_VISIBLE_DEVICES=0
+Sat Apr 18 05:59:06 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.105.08             Driver Version: 580.105.08     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H200                    On  |   00000000:9B:00.0 Off |                    0 |
+| N/A   51C    P0             86W /  700W |       0MiB / 143771MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+32001
+Recover LoRA weights..
+{'default': LoraConfig(peft_type=<PeftType.LORA: 'LORA'>, auto_mapping=None, base_model_name_or_path='meta-llama/Llama-2-7b-hf', revision=None, task_type='CAUSAL_LM', inference_mode=False, r=16, target_modules={'q_proj', 'k_proj', 'v_proj'}, lora_alpha=4, lora_dropout=0, fan_in_fan_out=False, bias='none', use_rslora=False, modules_to_save=None, init_lora_weights=True, layers_to_transform=None, layers_pattern=None, rank_pattern={}, alpha_pattern={}, megatron_config=None, megatron_core='megatron.core', loftq_config={})}
+PeftModelForCausalLM(
+  (base_model): LoraModel(
+    (model): LlamaForCausalLM(
+      (model): LlamaModel(
+        (embed_tokens): Embedding(32001, 4096)
+        (layers): ModuleList(
+          (0-31): 32 x LlamaDecoderLayer(
+            (self_attn): LlamaAttention(
+              (q_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (k_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (v_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+              (rotary_emb): LlamaRotaryEmbedding()
+            )
+            (mlp): LlamaMLP(
+              (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+              (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+              (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+              (act_fn): SiLU()
+            )
+            (input_layernorm): LlamaRMSNorm()
+            (post_attention_layernorm): LlamaRMSNorm()
+          )
+        )
+        (norm): LlamaRMSNorm()
+      )
+      (lm_head): Linear(in_features=4096, out_features=32001, bias=False)
+    )
+  )
+)
+PeftModelForCausalLM(
+  (base_model): LoraModel(
+    (model): LlamaForCausalLM(
+      (model): LlamaModel(
+        (embed_tokens): Embedding(32001, 4096)
+        (layers): ModuleList(
+          (0-31): 32 x LlamaDecoderLayer(
+            (self_attn): LlamaAttention(
+              (q_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (k_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (v_proj): lora.Linear(
+                (base_layer): Linear(in_features=4096, out_features=4096, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=4096, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=4096, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+              )
+              (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+              (rotary_emb): LlamaRotaryEmbedding()
+            )
+            (mlp): LlamaMLP(
+              (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+              (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+              (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+              (act_fn): SiLU()
+            )
+            (input_layernorm): LlamaRMSNorm()
+            (post_attention_layernorm): LlamaRMSNorm()
+          )
+        )
+        (norm): LlamaRMSNorm()
+      )
+      (lm_head): Linear(in_features=4096, out_features=32001, bias=False)
+    )
+  )
+)
+harmful dataset
+0.0
+loading calibdation data
+dataset loading complete
+pruning layer 0 name self_attn.q_proj.lora_A.default
+pruning layer 0 name self_attn.q_proj.lora_B.default
+pruning layer 0 name self_attn.k_proj.lora_A.default
+pruning layer 0 name self_attn.k_proj.lora_B.default
+pruning layer 0 name self_attn.v_proj.lora_A.default
+pruning layer 0 name self_attn.v_proj.lora_B.default
+pruning layer 1 name self_attn.q_proj.lora_A.default
+pruning layer 1 name self_attn.q_proj.lora_B.default
+pruning layer 1 name self_attn.k_proj.lora_A.default
+pruning layer 1 name self_attn.k_proj.lora_B.default
+pruning layer 1 name self_attn.v_proj.lora_A.default
+pruning layer 1 name self_attn.v_proj.lora_B.default
+pruning layer 2 name self_attn.q_proj.lora_A.default
+pruning layer 2 name self_attn.q_proj.lora_B.default
+pruning layer 2 name self_attn.k_proj.lora_A.default
+pruning layer 2 name self_attn.k_proj.lora_B.default
+pruning layer 2 name self_attn.v_proj.lora_A.default
+pruning layer 2 name self_attn.v_proj.lora_B.default
+pruning layer 3 name self_attn.q_proj.lora_A.default
+pruning layer 3 name self_attn.q_proj.lora_B.default
+pruning layer 3 name self_attn.k_proj.lora_A.default
+pruning layer 3 name self_attn.k_proj.lora_B.default
+pruning layer 3 name self_attn.v_proj.lora_A.default
+pruning layer 3 name self_attn.v_proj.lora_B.default
+pruning layer 4 name self_attn.q_proj.lora_A.default
+pruning layer 4 name self_attn.q_proj.lora_B.default
+pruning layer 4 name self_attn.k_proj.lora_A.default
+pruning layer 4 name self_attn.k_proj.lora_B.default
+pruning layer 4 name self_attn.v_proj.lora_A.default
+pruning layer 4 name self_attn.v_proj.lora_B.default
+pruning layer 5 name self_attn.q_proj.lora_A.default
+pruning layer 5 name self_attn.q_proj.lora_B.default
+pruning layer 5 name self_attn.k_proj.lora_A.default
+pruning layer 5 name self_attn.k_proj.lora_B.default
+pruning layer 5 name self_attn.v_proj.lora_A.default
+pruning layer 5 name self_attn.v_proj.lora_B.default
+pruning layer 6 name self_attn.q_proj.lora_A.default
+pruning layer 6 name self_attn.q_proj.lora_B.default
+pruning layer 6 name self_attn.k_proj.lora_A.default
+pruning layer 6 name self_attn.k_proj.lora_B.default
+pruning layer 6 name self_attn.v_proj.lora_A.default
+pruning layer 6 name self_attn.v_proj.lora_B.default
+pruning layer 7 name self_attn.q_proj.lora_A.default
+pruning layer 7 name self_attn.q_proj.lora_B.default
+pruning layer 7 name self_attn.k_proj.lora_A.default
+pruning layer 7 name self_attn.k_proj.lora_B.default
+pruning layer 7 name self_attn.v_proj.lora_A.default
+pruning layer 7 name self_attn.v_proj.lora_B.default
+pruning layer 8 name self_attn.q_proj.lora_A.default
+pruning layer 8 name self_attn.q_proj.lora_B.default
+pruning layer 8 name self_attn.k_proj.lora_A.default
+pruning layer 8 name self_attn.k_proj.lora_B.default
+pruning layer 8 name self_attn.v_proj.lora_A.default
+pruning layer 8 name self_attn.v_proj.lora_B.default
+pruning layer 9 name self_attn.q_proj.lora_A.default
+pruning layer 9 name self_attn.q_proj.lora_B.default
+pruning layer 9 name self_attn.k_proj.lora_A.default
+pruning layer 9 name self_attn.k_proj.lora_B.default
+pruning layer 9 name self_attn.v_proj.lora_A.default
+pruning layer 9 name self_attn.v_proj.lora_B.default
+pruning layer 10 name self_attn.q_proj.lora_A.default
+pruning layer 10 name self_attn.q_proj.lora_B.default
+pruning layer 10 name self_attn.k_proj.lora_A.default
+pruning layer 10 name self_attn.k_proj.lora_B.default
+pruning layer 10 name self_attn.v_proj.lora_A.default
+pruning layer 10 name self_attn.v_proj.lora_B.default
+pruning layer 11 name self_attn.q_proj.lora_A.default
+pruning layer 11 name self_attn.q_proj.lora_B.default
+pruning layer 11 name self_attn.k_proj.lora_A.default
+pruning layer 11 name self_attn.k_proj.lora_B.default
+pruning layer 11 name self_attn.v_proj.lora_A.default
+pruning layer 11 name self_attn.v_proj.lora_B.default
+pruning layer 12 name self_attn.q_proj.lora_A.default
+pruning layer 12 name self_attn.q_proj.lora_B.default
+pruning layer 12 name self_attn.k_proj.lora_A.default
+pruning layer 12 name self_attn.k_proj.lora_B.default
+pruning layer 12 name self_attn.v_proj.lora_A.default
+pruning layer 12 name self_attn.v_proj.lora_B.default
+pruning layer 13 name self_attn.q_proj.lora_A.default
+pruning layer 13 name self_attn.q_proj.lora_B.default
+pruning layer 13 name self_attn.k_proj.lora_A.default
+pruning layer 13 name self_attn.k_proj.lora_B.default
+pruning layer 13 name self_attn.v_proj.lora_A.default
+pruning layer 13 name self_attn.v_proj.lora_B.default
+pruning layer 14 name self_attn.q_proj.lora_A.default
+pruning layer 14 name self_attn.q_proj.lora_B.default
+pruning layer 14 name self_attn.k_proj.lora_A.default
+pruning layer 14 name self_attn.k_proj.lora_B.default
+pruning layer 14 name self_attn.v_proj.lora_A.default
+pruning layer 14 name self_attn.v_proj.lora_B.default
+pruning layer 15 name self_attn.q_proj.lora_A.default
+pruning layer 15 name self_attn.q_proj.lora_B.default
+pruning layer 15 name self_attn.k_proj.lora_A.default
+pruning layer 15 name self_attn.k_proj.lora_B.default
+pruning layer 15 name self_attn.v_proj.lora_A.default
+pruning layer 15 name self_attn.v_proj.lora_B.default
+pruning layer 16 name self_attn.q_proj.lora_A.default
+pruning layer 16 name self_attn.q_proj.lora_B.default
+pruning layer 16 name self_attn.k_proj.lora_A.default
+pruning layer 16 name self_attn.k_proj.lora_B.default
+pruning layer 16 name self_attn.v_proj.lora_A.default
+pruning layer 16 name self_attn.v_proj.lora_B.default
+pruning layer 17 name self_attn.q_proj.lora_A.default
+pruning layer 17 name self_attn.q_proj.lora_B.default
+pruning layer 17 name self_attn.k_proj.lora_A.default
+pruning layer 17 name self_attn.k_proj.lora_B.default
+pruning layer 17 name self_attn.v_proj.lora_A.default
+pruning layer 17 name self_attn.v_proj.lora_B.default
+pruning layer 18 name self_attn.q_proj.lora_A.default
+pruning layer 18 name self_attn.q_proj.lora_B.default
+pruning layer 18 name self_attn.k_proj.lora_A.default
+pruning layer 18 name self_attn.k_proj.lora_B.default
+pruning layer 18 name self_attn.v_proj.lora_A.default
+pruning layer 18 name self_attn.v_proj.lora_B.default
+pruning layer 19 name self_attn.q_proj.lora_A.default
+pruning layer 19 name self_attn.q_proj.lora_B.default
+pruning layer 19 name self_attn.k_proj.lora_A.default
+pruning layer 19 name self_attn.k_proj.lora_B.default
+pruning layer 19 name self_attn.v_proj.lora_A.default
+pruning layer 19 name self_attn.v_proj.lora_B.default
+pruning layer 20 name self_attn.q_proj.lora_A.default
+pruning layer 20 name self_attn.q_proj.lora_B.default
+pruning layer 20 name self_attn.k_proj.lora_A.default
+pruning layer 20 name self_attn.k_proj.lora_B.default
+pruning layer 20 name self_attn.v_proj.lora_A.default
+pruning layer 20 name self_attn.v_proj.lora_B.default
+pruning layer 21 name self_attn.q_proj.lora_A.default
+pruning layer 21 name self_attn.q_proj.lora_B.default
+pruning layer 21 name self_attn.k_proj.lora_A.default
+pruning layer 21 name self_attn.k_proj.lora_B.default
+pruning layer 21 name self_attn.v_proj.lora_A.default
+pruning layer 21 name self_attn.v_proj.lora_B.default
+pruning layer 22 name self_attn.q_proj.lora_A.default
+pruning layer 22 name self_attn.q_proj.lora_B.default
+pruning layer 22 name self_attn.k_proj.lora_A.default
+pruning layer 22 name self_attn.k_proj.lora_B.default
+pruning layer 22 name self_attn.v_proj.lora_A.default
+pruning layer 22 name self_attn.v_proj.lora_B.default
+pruning layer 23 name self_attn.q_proj.lora_A.default
+pruning layer 23 name self_attn.q_proj.lora_B.default
+pruning layer 23 name self_attn.k_proj.lora_A.default
+pruning layer 23 name self_attn.k_proj.lora_B.default
+pruning layer 23 name self_attn.v_proj.lora_A.default
+pruning layer 23 name self_attn.v_proj.lora_B.default
+pruning layer 24 name self_attn.q_proj.lora_A.default
+pruning layer 24 name self_attn.q_proj.lora_B.default
+pruning layer 24 name self_attn.k_proj.lora_A.default
+pruning layer 24 name self_attn.k_proj.lora_B.default
+pruning layer 24 name self_attn.v_proj.lora_A.default
+pruning layer 24 name self_attn.v_proj.lora_B.default
+pruning layer 25 name self_attn.q_proj.lora_A.default
+pruning layer 25 name self_attn.q_proj.lora_B.default
+pruning layer 25 name self_attn.k_proj.lora_A.default
+pruning layer 25 name self_attn.k_proj.lora_B.default
+pruning layer 25 name self_attn.v_proj.lora_A.default
+pruning layer 25 name self_attn.v_proj.lora_B.default
+pruning layer 26 name self_attn.q_proj.lora_A.default
+pruning layer 26 name self_attn.q_proj.lora_B.default
+pruning layer 26 name self_attn.k_proj.lora_A.default
+pruning layer 26 name self_attn.k_proj.lora_B.default
+pruning layer 26 name self_attn.v_proj.lora_A.default
+pruning layer 26 name self_attn.v_proj.lora_B.default
+pruning layer 27 name self_attn.q_proj.lora_A.default
+pruning layer 27 name self_attn.q_proj.lora_B.default
+pruning layer 27 name self_attn.k_proj.lora_A.default
+pruning layer 27 name self_attn.k_proj.lora_B.default
+pruning layer 27 name self_attn.v_proj.lora_A.default
+pruning layer 27 name self_attn.v_proj.lora_B.default
+pruning layer 28 name self_attn.q_proj.lora_A.default
+pruning layer 28 name self_attn.q_proj.lora_B.default
+pruning layer 28 name self_attn.k_proj.lora_A.default
+pruning layer 28 name self_attn.k_proj.lora_B.default
+pruning layer 28 name self_attn.v_proj.lora_A.default
+pruning layer 28 name self_attn.v_proj.lora_B.default
+pruning layer 29 name self_attn.q_proj.lora_A.default
+pruning layer 29 name self_attn.q_proj.lora_B.default
+pruning layer 29 name self_attn.k_proj.lora_A.default
+pruning layer 29 name self_attn.k_proj.lora_B.default
+pruning layer 29 name self_attn.v_proj.lora_A.default
+pruning layer 29 name self_attn.v_proj.lora_B.default
+pruning layer 30 name self_attn.q_proj.lora_A.default
+pruning layer 30 name self_attn.q_proj.lora_B.default
+pruning layer 30 name self_attn.k_proj.lora_A.default
+pruning layer 30 name self_attn.k_proj.lora_B.default
+pruning layer 30 name self_attn.v_proj.lora_A.default
+pruning layer 30 name self_attn.v_proj.lora_B.default
+pruning layer 31 name self_attn.q_proj.lora_A.default
+pruning layer 31 name self_attn.q_proj.lora_B.default
+pruning layer 31 name self_attn.k_proj.lora_A.default
+pruning layer 31 name self_attn.k_proj.lora_B.default
+pruning layer 31 name self_attn.v_proj.lora_A.default
+pruning layer 31 name self_attn.v_proj.lora_B.default
+Loading/Merging LoRA 1: /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/Llama-2-7b-hf_sft
+Loading/Merging LoRA 2: /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000
+final score:69.90
+input path: /storage/ice1/3/3/rswaminathan38/Research/Antidote/data/poison/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000
+Namespace(model_folder='meta-llama/Llama-2-7b-hf', lora_folder='/storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/Llama-2-7b-hf_sft', lora_folder2='/storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000', output_path='/storage/ice1/3/3/rswaminathan38/Research/Antidote/data/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000', cache_dir='../cache')
+Recovering LoRA weights from /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/Llama-2-7b-hf_sft...
+Recovering LoRA weights from /storage/ice1/3/3/rswaminathan38/Research/Antidote/ckpt/sst2/Llama-2-7b-hf_antidote_f_0.05_0.2_5000_2000...
+Final Score: 95.18%
+ANTIDOTE DENSE-RATIO RUN COMPLETED
+Sat Apr 18 07:14:40 EDT 2026
+---------------------------------------
+Begin Slurm Epilog: Apr-18-2026 07:14:41
+Job ID:        4913724
+User ID:       rswaminathan38
+Account:       coc
+Job name:      antidote_dr_005_h200
+Resources:     cpu=1,gres/gpu:h200=1,mem=64G,node=1
+Rsrc Used:     cput=01:17:01,vmem=0,walltime=01:17:01,mem=40809144K,energy_used=0
+Partition:     ice-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-018-2-0
+---------------------------------------
